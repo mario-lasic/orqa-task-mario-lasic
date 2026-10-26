@@ -10,12 +10,32 @@
     </head>
     <body>
         <header>
-            <nav>
-                <a href="">ngCloud</a>
-                <a href="">login</a>
+            <nav class="d-flex align-items-center justify-content-between">
+                <a href="{{ route('home') }}">ngCloud</a>
+                <div class="d-flex align-items-center gap-2">
+                    @auth
+                        <span>{{ auth()->user()->username }}</span>
+                        <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-secondary">Logout</button>
+                        </form>
+                    @endauth
+                    @guest
+                        <a href="{{ route('login') }}">Login</a>
+                    @endguest
+                </div>
             </nav>
         </header>
         <main>
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @yield('content')
         </main>
         <footer>
