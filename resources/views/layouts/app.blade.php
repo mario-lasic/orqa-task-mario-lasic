@@ -14,6 +14,12 @@
                 <a href="{{ route('home') }}">ngCloud</a>
                 <div class="d-flex align-items-center gap-2">
                     @auth
+                        @if (auth()->user()->hasRole('user'))
+                            <a href="{{ route('documents.index') }}">Moje datoteke</a>
+                        @endif
+                        @if (auth()->user()->hasRole('super_admin'))
+                            <a href="{{ route('admin.documents.index') }}">Sve datoteke</a>
+                        @endif
                         <span>{{ auth()->user()->username }}</span>
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
