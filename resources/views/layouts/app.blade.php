@@ -7,12 +7,14 @@
         <title>ngCloud</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
     </head>
     <body>
         <header>
-            <nav class="d-flex align-items-center justify-content-between">
+            <nav class="container d-flex flex-wrap align-items-center justify-content-between gap-3 py-3">
                 <a href="{{ route('home') }}">ngCloud</a>
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex flex-wrap align-items-center gap-2">
                     @auth
                         @if (auth()->user()->hasRole('user'))
                             <a href="{{ route('documents.index') }}">Moje datoteke</a>
@@ -34,7 +36,7 @@
                 </div>
             </nav>
         </header>
-        <main>
+        <main class="container py-4">
             @if($errors->any())
                 <div class="alert alert-danger">
                     <ul class="mb-0">
@@ -46,8 +48,8 @@
             @endif
             @yield('content')
         </main>
-        <footer>
-            <p>Mario Lasić</p>
+        <footer class="container">
+            <p>©2026</p>
         </footer>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

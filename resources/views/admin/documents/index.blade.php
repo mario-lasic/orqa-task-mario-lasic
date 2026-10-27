@@ -4,7 +4,7 @@
     @if (session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
-    <div class="table-responsive w-50">
+    <div class="table-responsive">
         <table class="table table-striped">
             <tr>
                 <th>Naziv</th>
@@ -15,7 +15,10 @@
             </tr>
             @forelse($documents as $document)
                 <tr>
-                    <td>{{ $document->original_name }}</td>
+                    <td class="text-break">
+                        @include('partials.document-icon', ['document' => $document])
+                        {{ $document->original_name }}
+                    </td>
                     <td>{{ $document->size_bytes }}</td>
                     <td>{{ $document->created_at }}</td>
                     <td>{{ $document->user->username }}</td>

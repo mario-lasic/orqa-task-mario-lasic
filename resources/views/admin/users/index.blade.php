@@ -1,7 +1,7 @@
 @extends('layouts/app')
 @section('content')
     <h1>Korisnici</h1>
-    <div class="table-responsive w-50">
+    <div class="table-responsive">
         <table class="table table-striped">
             <tr>
                 <th>Korisničko ime</th>

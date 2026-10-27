@@ -9,11 +9,14 @@
         <div class="mb-3">
             <label for="document" class="form-label">Odaberi datoteku</label>
             <input type="file" name="document" id="document" required
-                class="form-control">
+                class="form-control" aria-describedby="document-help">
+            <div id="document-help" class="form-text">
+                Najveća veličina pojedinačne datoteke je 2 MiB.
+            </div>
         </div>
         <button type="submit" class="btn btn-primary">Učitaj datoteku</button>
     </form>
-    <div class="table-responsive w-50">
+    <div class="table-responsive">
         <table class="table table-striped">
             <tr>
                 <th>Naziv</th>
@@ -23,7 +26,10 @@
             </tr>
             @forelse($documents as $document)
                 <tr>
-                    <td>{{ $document->original_name }}</td>
+                    <td class="text-break">
+                        @include('partials.document-icon', ['document' => $document])
+                        {{ $document->original_name }}
+                    </td>
                     <td>{{ $document->size_bytes }}</td>
                     <td>{{ $document->created_at }}</td>
                     <td>

@@ -15,9 +15,16 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DocumentController extends Controller
 {
-    public function index(Request $request): View
+    public function index(Request $request): View|RedirectResponse
     {
         $documents = $request->user()->documents()->orderByDesc('id')->paginate(5);
+        if ($documents->currentPage() > $documents->lastPage()) {
+            session()->keep('success');
+
+            return redirect()->route('documents.index', [
+                'page' => $documents->lastPage(),
+            ]);
+        }
 
         return view('documents.index', ['documents' => $documents]);
     }
