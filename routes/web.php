@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DocumentController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function (Request $request) {
     if ($request->user()->hasRole('super_admin')) {
@@ -19,9 +20,15 @@ Route::post('/login', [AuthController::class, 'login'])
 Route::post('/logout', [AuthController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
-Route::get('/documents', function () {
-    return view('documents.index');
-})->middleware(['auth', 'role:user'])->name('documents.index');
+
 Route::get('/admin/documents', function () {
     return view('admin.documents.index');
 })->middleware(['auth', 'role:super_admin'])->name('admin.documents.index');
+
+Route::get('/documents', [DocumentController::class, 'index'])
+    ->middleware(['auth', 'role:user'])
+    ->name('documents.index');
+
+Route::post('/documents', [DocumentController::class, 'store'])
+    ->middleware(['auth', 'role:user'])
+    ->name('documents.store');
