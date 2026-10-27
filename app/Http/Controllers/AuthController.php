@@ -9,16 +9,18 @@ use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
 {
-    public function showLoginForm(): View {
+    public function showLoginForm(): View
+    {
         return view('auth.login');
     }
 
-    public function login(Request $request): RedirectResponse {
+    public function login(Request $request): RedirectResponse
+    {
         $credentials = $request->validate([
             'username' => 'string|required',
-            'password'=> 'string|required'
+            'password' => 'string|required'
         ]);
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/');
         } else {
