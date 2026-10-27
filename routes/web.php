@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,3 +41,11 @@ Route::get('/documents/{document}/download', [DocumentController::class, 'downlo
 Route::delete('/documents/{document}', [DocumentController::class, 'destroy'])
     ->middleware('auth')
     ->name('documents.destroy');
+
+Route::get('/profile', [ProfileController::class, 'edit'])
+    ->middleware(['auth', 'role:user'])
+    ->name('profile.edit');
+
+Route::patch('/profile', [ProfileController::class, 'update'])
+    ->middleware(['auth', 'role:user'])
+    ->name('profile.update');

@@ -16,6 +16,7 @@
                     @auth
                         @if (auth()->user()->hasRole('user'))
                             <a href="{{ route('documents.index') }}">Moje datoteke</a>
+                            <a href="{{ route('profile.edit') }}">Moj profil</a>
                         @endif
                         @if (auth()->user()->hasRole('super_admin'))
                             <a href="{{ route('admin.documents.index') }}">Sve datoteke</a>

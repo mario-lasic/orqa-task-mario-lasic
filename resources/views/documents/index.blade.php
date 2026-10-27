@@ -55,4 +55,5 @@
         </table>
         {{ $documents->links() }}
     </div>
+    @include('partials.storage-space', ['user' => auth()->user()])
 @endsection
