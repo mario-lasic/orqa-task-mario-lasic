@@ -32,3 +32,11 @@ Route::get('/documents', [DocumentController::class, 'index'])
 Route::post('/documents', [DocumentController::class, 'store'])
     ->middleware(['auth', 'role:user'])
     ->name('documents.store');
+
+Route::get('/documents/{document}/download', [DocumentController::class, 'download'])
+    ->middleware('auth')
+    ->name('documents.download');
+
+Route::delete('/documents/{document}', [DocumentController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('documents.destroy');

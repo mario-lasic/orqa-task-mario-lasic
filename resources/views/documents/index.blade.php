@@ -19,16 +19,37 @@
                 <th>Naziv</th>
                 <th>Veličina (B)</th>
                 <th>Stvoreno</th>
+                <th>Radnje</th>
             </tr>
             @forelse($documents as $document)
                 <tr>
                     <td>{{ $document->original_name }}</td>
                     <td>{{ $document->size_bytes }}</td>
                     <td>{{ $document->created_at }}</td>
+                    <td>
+                        @can('download', $document)
+                            <a href="{{ route('documents.download', $document) }}"
+                                class="btn btn-sm btn-outline-primary">
+                                Preuzmi
+                            </a>
+                        @endcan
+                        @can('delete', $document)
+                            <form action="{{ route('documents.destroy', $document) }}"
+                                method="POST"
+                                class="d-inline">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="btn btn-sm btn-outline-danger">
+                                    Obriši
+                                </button>
+                            </form>
+                        @endcan
+                    </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="3">Još nema datoteka.</td>
+                    <td colspan="4">Još nema datoteka.</td>
                 </tr>
             @endforelse
         </table>

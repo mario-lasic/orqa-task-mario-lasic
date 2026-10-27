@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Document;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class DocumentController extends Controller
 {
@@ -78,5 +81,45 @@ class DocumentController extends Controller
 
         return redirect()->route('documents.index')
             ->with('success', 'Datoteka je uspješno učitana.');
+    }
+
+    public function download(Document $document): StreamedResponse
+    {
+        Gate::authorize('download', $document);
+        if (! Storage::disk('local')->exists($document->path)) {
+            abort(404);
+        }
+
+        return Storage::disk('local')->download(
+            $document->path,
+            $document->original_name
+        );
+    }
+
+    public function destroy(Document $document): RedirectResponse
+    {
+        Gate::authorize('delete', $document);
+        DB::transaction(function () use ($document) {
+            User::query()
+                ->whereKey($document->user_id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            $lockedDocument = Document::query()
+                ->whereKey($document->id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            Gate::authorize('delete', $lockedDocument);
+
+            if (! $lockedDocument->delete()) {
+                throw new \RuntimeException('Brisanje zapisa dokumenta nije uspjelo.');
+            }
+            if (! Storage::disk('local')->delete($lockedDocument->path)) {
+                throw ValidationException::withMessages(['document' => 'Brisanje datoteke nije uspjelo. Pokušajte ponovno.']);
+            }
+        });
+
+        return back()->with('success', 'Dokument je uspješno obrisan.');
     }
 }
