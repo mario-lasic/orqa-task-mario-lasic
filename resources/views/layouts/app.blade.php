@@ -20,6 +20,7 @@
                         @endif
                         @if (auth()->user()->hasRole('super_admin'))
                             <a href="{{ route('admin.documents.index') }}">Sve datoteke</a>
+                            <a href="{{ route('admin.users.index') }}">Korisnici</a>
                         @endif
                         <span>{{ auth()->user()->username }}</span>
                         <form action="{{ route('logout') }}" method="post">

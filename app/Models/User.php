@@ -70,6 +70,10 @@ class User extends Authenticatable
 
     public function usedStorageBytes(): int
     {
+        if (array_key_exists('documents_sum_size_bytes', $this->getAttributes())) {
+            return (int) $this->getAttribute('documents_sum_size_bytes');
+        }
+
         return (int) $this->documents()->sum('size_bytes');
     }
 
