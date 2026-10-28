@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Document;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Document>
+ * @extends Factory<Document>
  */
 class DocumentFactory extends Factory
 {
@@ -20,10 +21,10 @@ class DocumentFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'original_name' => fake()->word() . '.txt',
-            'path' => 'documents/' . Str::uuid() . '.txt',
+            'original_name' => fake()->word().'.txt',
+            'path' => 'documents/'.Str::uuid().'.txt',
             'size_bytes' => fake()->numberBetween(1_024, 1_000_000),
-            'extension' => 'txt'
+            'extension' => 'txt',
         ];
     }
 }

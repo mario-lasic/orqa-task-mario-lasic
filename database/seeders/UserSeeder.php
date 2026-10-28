@@ -2,10 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use App\Models\User;
 use App\Models\Role;
+use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {
@@ -19,22 +18,22 @@ class UserSeeder extends Seeder
         $attributes = User::factory()->raw([
             'username' => 'ivan',
             'name' => 'Ivan',
-            'email' => 'ivan@gmail.com'
+            'email' => 'ivan@gmail.com',
         ]);
         $markoAttributes = User::factory()->raw([
             'username' => 'marko',
             'name' => 'Marko',
-            'email' => 'marko@gmail.com'
+            'email' => 'marko@gmail.com',
         ]);
         $anaAttributes = User::factory()->raw([
             'username' => 'ana',
             'name' => 'Ana',
-            'email' => 'ana@gmail.com'
+            'email' => 'ana@gmail.com',
         ]);
         $superAttributes = User::factory()->raw([
             'username' => 'superadmin',
             'name' => 'SuperAdmin',
-            'email' => 'superadmin@gmail.com'
+            'email' => 'superadmin@gmail.com',
         ]);
         $user = User::firstOrCreate(['username' => 'ivan'], $attributes);
         $marko = User::firstOrCreate(['username' => 'marko'], $markoAttributes);

@@ -9,34 +9,45 @@
             integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.2/font/bootstrap-icons.min.css">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     </head>
-    <body>
-        <header>
+    <body class="bg-light d-flex flex-column min-vh-100">
+        <header class="bg-dark">
             <nav class="container d-flex flex-wrap align-items-center justify-content-between gap-3 py-3">
-                <a href="{{ route('home') }}">ngCloud</a>
-                <div class="d-flex flex-wrap align-items-center gap-2">
+                <a href="{{ route('home') }}"
+                    class="d-flex align-items-center gap-2 text-white text-decoration-none fs-5">
+                    <i class="bi bi-cloud text-info" aria-hidden="true"></i>
+                    ngCloud
+                </a>
+                <div class="d-flex flex-wrap align-items-center gap-3">
                     @auth
                         @if (auth()->user()->hasRole('user'))
-                            <a href="{{ route('documents.index') }}">Moje datoteke</a>
-                            <a href="{{ route('profile.edit') }}">Moj profil</a>
+                            <a href="{{ route('documents.index') }}" class="app-nav-link">Moje
+                                datoteke</a>
+                            <a href="{{ route('profile.edit') }}" class="app-nav-link">Moj
+                                profil</a>
                         @endif
                         @if (auth()->user()->hasRole('super_admin'))
-                            <a href="{{ route('admin.documents.index') }}">Sve datoteke</a>
-                            <a href="{{ route('admin.users.index') }}">Korisnici</a>
+                            <a href="{{ route('admin.documents.index') }}" class="app-nav-link">Sve
+                                datoteke</a>
+                            <a href="{{ route('admin.users.index') }}" class="app-nav-link">Korisnici</a>
                         @endif
-                        <span>{{ auth()->user()->username }}</span>
+                        <span class="text-white">
+                            <i class="bi bi-person-fill" aria-hidden="true"></i>
+                            {{ auth()->user()->username }}
+                        </span>
                         <form action="{{ route('logout') }}" method="post">
                             @csrf
-                            <button type="submit" class="btn btn-outline-secondary">Logout</button>
+                            <button type="submit" class="btn btn-sm btn-outline-light">Logout</button>
                         </form>
                     @endauth
                     @guest
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}" class="btn btn-sm btn-outline-light">Login</a>
                     @endguest
                 </div>
             </nav>
         </header>
-        <main class="container py-4">
+        <main class="container bg-white py-4 flex-grow-1">
             @if($errors->any())
                 <div class="alert alert-danger">
                     <ul class="mb-0">
@@ -48,7 +59,7 @@
             @endif
             @yield('content')
         </main>
-        <footer class="container">
+        <footer class="container py-3 text-secondary">
             <p>©2026</p>
         </footer>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
